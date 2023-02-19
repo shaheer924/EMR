@@ -1,9 +1,7 @@
 import BaseController from './BaseController'
-import User from "../Model/User";
 import {NextFunction, Request, Response} from "express";
 import UserRepos from "../Repos/UserRepos";
 import AppError from "../Utils/AppError";
-import {Expression, Schema} from "mongoose";
 
 class UserController extends BaseController{
     constructor() {
@@ -54,10 +52,11 @@ class UserController extends BaseController{
         }
     }
 
-    createUser = async (req: Request, res: Response) => {
+    createUser = async (req: Request, res: Response,next: NextFunction) => {
         try {
             // @ts-ignore
             const data = req.body
+            if(!data.parent_cnic) return next(new AppError('Please provide parent cnic', 400))
             //check if user is present
             const user = await UserRepos.model.findOne({ cnic: data.cnic }).select('+is_last_login')
             let parent_user = await UserRepos.model.findOne( { cnic: data.parent_cnic } )
@@ -82,11 +81,9 @@ class UserController extends BaseController{
             data.parent = parent_user._id
             let created_user
             //if user is present then check if user is already loggedIn
-            console.log(user)
             if(user){
-
                 if(user.is_last_login){
-                    throw new Error('User already created')
+                    return next( new AppError('User already created',400))
                 }
                 //if not user have to update their details
                 await UserRepos.updateById(user._id, data)

@@ -2,6 +2,8 @@ import express, {Request, Response} from "express";
 import UserController from "../../Controller/UserController";
 // @ts-ignore
 import catchAsync from '../../Utils/Handle'
+import {UserMiddleware} from "./../../Validators/UserValidators";
+import {AuthenticationMiddleware} from "../../Middleware/AuthenticationMiddleware";
 
 const router = express.Router()
 
@@ -12,6 +14,8 @@ router.get('/check', (req: Request, res: Response)=> {
 
 router.post('/user/sign-up', UserController.signUp)
 router.post('/user/sign-in', UserController.signIn)
+
+router.use(AuthenticationMiddleware)
 
 router.post('/user', UserController.createUser)
 router.get('/user', UserController.getAll)
