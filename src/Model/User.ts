@@ -5,18 +5,49 @@ import bcrypt from 'bcryptjs'
 
 // @ts-ignore
 const UserModel = new mongoose.Schema<IUser>({
-    name: {
+    first_name: {
         type: String,
         required: true
     },
-    email: {
+    last_name: {
         type: String,
         required: true
+    },
+    image: {
+        type: String,
     },
     cnic: {
         type: String,
         required: true,
         unique: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    parental_cnic: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    maternal_cnic: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    city_id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'cities',
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    postal_code:{
+        type: String
+    },
+    phone_no: {
+        type: String,
     },
     password: {
         type: String,
@@ -36,29 +67,9 @@ const UserModel = new mongoose.Schema<IUser>({
         type: Types.ObjectId,
         ref: "users",
     },
-    phone_no: {
-        type: String,
-    },
-    telephone_no: {
-        type: String,
-        required: true
-    },
-    city_id: {
-        type: String,
-        required: true
-    },
-    address: {
-        type: String,
-        required: true
-    },
-    role_id: {
-        type: String,
-        required: true
-    },
     is_last_login: {
         type: Date
     }
-
 },{
     timestamps: true
 })

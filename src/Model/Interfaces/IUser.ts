@@ -1,15 +1,18 @@
 export interface IUser {
     _id: string
-    name: string,
-    email: string,
+    first_name: string,
+    last_name: string,
+    image: string,
     cnic: string,
-    parent: any,
-    phone_no: string,
-    telephone_no: string,
-    city_id: string,
+    email: string,
+    parental_cnic: string,
+    maternal_cnic: string,
+    city_id: any,
     address: string,
-    role_id: string,
+    postal_code: string,
+    phone_no: string,
     password: string,
     confirm_password: string,
-    is_last_login: any
+    is_last_login: any,
+    parent: any
 }
