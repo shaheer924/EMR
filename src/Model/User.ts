@@ -41,7 +41,7 @@ const UserModel = new mongoose.Schema<IUser>({
     },
     address: {
         type: String,
-        required: true
+        required: false
     },
     postal_code:{
         type: String

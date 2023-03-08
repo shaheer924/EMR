@@ -23,14 +23,16 @@ class UserRepos extends BaseRepos{
 
     public createDummyUser (cnic: any, city_id: string, address: string, telephone_no: string, phone_no: string) {
         const dummyUser = new User({
-            "first_name": undefined,
-            "last_name": undefined,
+            "first_name": "dummy first",
+            "last_name": "dummy second",
             "cnic": cnic,
             "address": address,
             "city_id": city_id,
             "telephone_no": telephone_no,
             "phone_no": phone_no,
             "password": "12345678",
+            "parental_cnic": "0000000000000",
+            "maternal_cnic": "0000000000000",
             "confirm_password":"12345678",
             "email": "dummy@yopmail.com",
             "name": "dummy"

@@ -58,13 +58,13 @@ class UserController extends BaseController{
         try {
             // @ts-ignore
             const data = req.body
-            if(!data.parent_cnic) return next(new AppError('Please provide parent cnic', 400))
+            if(!data.parental_cnic) return next(new AppError('Please provide parent cnic', 400))
             //check if user is present
             const user = await UserRepos.model.findOne({ cnic: data.cnic }).select('+is_last_login')
-            let parent_user = await UserRepos.model.findOne( { cnic: data.parent_cnic } )
+            let parent_user = await UserRepos.model.findOne( { cnic: data.parental_cnic } )
 
             if(!parent_user){
-                parent_user = await UserRepos.createDummyUser(data.parent_cnic, data.city_id, data.address, data.telephone_no, data.phone_no)
+                parent_user = await UserRepos.createDummyUser(data.parental_cnic, data.city_id, data.address, data.telephone_no, data.phone_no)
             }
 
             data.parent = parent_user._id
@@ -86,7 +86,7 @@ class UserController extends BaseController{
             this.apiResponse('record created successfully', created_user, 200, res)
         } catch (e) {
             // @ts-ignore
-            throw new AppError(e, 500)
+            return next(new AppError(e, 500))
         }
     }
 
