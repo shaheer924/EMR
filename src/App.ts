@@ -5,6 +5,7 @@ import * as mongoose from "mongoose";
 import Router from "./Router/v1/router";
 import {ErrorController} from "./Middleware/ErrorController";
 import {PublicRouteHandle} from "./Middleware/PublicRouteHandle";
+import {RunFactory} from "./Utils/Factory/FactoryInsert";
 
 class App {
     public port: any;
@@ -20,6 +21,7 @@ class App {
         this.initializeDatabase()
         this.initializeRouter()
         this.initializeErrorHandler()
+        //
     }
 
     private initializeMiddleware() {
@@ -37,6 +39,13 @@ class App {
         }).catch((err: Error) => {
             console.log(err)
         })
+
+        // @ts-ignore
+        if(process.env.FACTORY_RUN == 1) this.initializeFactoryRun()
+    }
+
+    private initializeFactoryRun() {
+        RunFactory()
     }
 
     private initializeRouter() {

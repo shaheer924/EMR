@@ -6,6 +6,21 @@ const HealthCarePlaceSchema = new mongoose.Schema<IHealthCarePlaces>({
         type: String,
         required: true
     },
+    image: {
+        type: String
+    },
+    email: {
+       type: String
+    },
+    phone_no: {
+        type: String
+    },
+    state: {
+       type: String
+    },
+    country: {
+        type: String
+    },
     type_id: {
         type: mongoose.Types.ObjectId,
         ref: 'health_care_place_type'

@@ -2,13 +2,14 @@ import BaseController from './BaseController'
 import {NextFunction, Request, Response} from "express";
 import UserRepos from "../Repos/UserRepos";
 import AppError from "../Utils/AppError";
+import AdminUserRepos from "../Repos/AdminUserRepos";
 
 class UserController extends BaseController{
     constructor() {
         super(UserRepos);
     }
 
-    signUp = async (req: Request, res: Response, next: NextFunction) => {
+    createAdminUser = async (req: Request, res: Response, next: NextFunction) => {
         try {
             // @ts-ignore
             const data: any = req.body
@@ -29,30 +30,31 @@ class UserController extends BaseController{
     signIn = async (req: Request, res: Response, next: NextFunction) => {
         try {
             // @ts-ignore
-            const {email, password, cnic, role_id} = req.body
-            if(!role_id) return next(new AppError('Please provide role to sign in', 400))
+            const {email, password, cnic, role} = req.body
+            if(email && !role) return next(new AppError('Please provide role to sign in', 400))
             let user;
 
-            if(role_id == 1) {
+            if(!role && !email) {
                 user = await UserRepos.model.findOne({cnic: cnic}).select('+password')
             } else {
-                user = await UserRepos.model.findOne({email: email}).select('+password')
+                user = await AdminUserRepos.model.findOne({email: email}).select('+password')
             }
 
             if(!user) return next(new AppError('No user found in database', 404))
             const condition = await user.correctPassword(password, user.password)
             if(!condition) return next(new AppError('Incorrect password', 404))
-
-            let data = await UserRepos.updateById(user._id, {is_last_login: new Date()})
+            let data
+            if(cnic) data = await UserRepos.updateById(user._id, {is_last_login: new Date()})
+            else data = await AdminUserRepos.model.findOne({_id: user._id})
             let token = UserRepos.signToken(user._id)
             this.apiResponse('User sign in successful',data,200, res, token)
 
         } catch (e) {
-            console.log(e)
+            return next(new AppError(JSON.stringify(e),400))
         }
     }
 
-    createUser = async (req: Request, res: Response,next: NextFunction) => {
+    createPatientUser = async (req: Request, res: Response,next: NextFunction) => {
         try {
             // @ts-ignore
             const data = req.body
@@ -62,20 +64,7 @@ class UserController extends BaseController{
             let parent_user = await UserRepos.model.findOne( { cnic: data.parent_cnic } )
 
             if(!parent_user){
-                parent_user = await UserRepos.model.create({
-                    "first_name": undefined,
-                    "last_name": undefined,
-                    "cnic": data.parent_cnic,
-                    "role_id": data.role_id,
-                    "address": data.address,
-                    "city_id": data.city_id,
-                    "telephone_no": data.telephone_no,
-                    "phone_no": data.phone_no,
-                    "password": "12345678",
-                    "confirm_password":"12345678",
-                    "email": "dummy@yopmail.com",
-                    "name": "dummy"
-                })
+                parent_user = await UserRepos.createDummyUser(data.parent_cnic, data.city_id, data.address, data.telephone_no, data.phone_no)
             }
 
             data.parent = parent_user._id

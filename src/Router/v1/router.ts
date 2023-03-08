@@ -21,12 +21,13 @@ router.get('/check', (req: Request, res: Response)=> {
     res.send("<h1>Hello World</h1>")
 })
 
-router.post('/user/sign-up', UserController.signUp)
+// router.post('/user/sign-up', UserController.signUp)
 router.post('/user/sign-in', UserController.signIn)
 
 router.use(AuthenticationMiddleware)
 
-router.post('/user', UserController.createUser)
+router.post('/user-patient', UserController.createPatientUser)
+router.post('/user-admin', UserController.createAdminUser)
 router.get('/user', UserController.getAll)
 router.get('/user/:id', catchAsync(UserController.getById))
 router.get('/user/:cnic/get-family', catchAsync(UserController.getFamily))

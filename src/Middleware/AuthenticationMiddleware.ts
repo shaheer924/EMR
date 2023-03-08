@@ -1,6 +1,7 @@
 import {NextFunction, Request, Response} from "express";
 import UserRepos from "../Repos/UserRepos";
 import AppError from "../Utils/AppError";
+import AdminUserRepos from "../Repos/AdminUserRepos";
 
 export const AuthenticationMiddleware = async (req: Request,  res: Response, next: NextFunction) => {
     let token;
@@ -12,7 +13,7 @@ export const AuthenticationMiddleware = async (req: Request,  res: Response, nex
     // @ts-ignore
     let decoded = await UserRepos.decodeToken(token)
     // @ts-ignore
-    const user = await UserRepos.getById(decoded?.id)
+    const user = await AdminUserRepos.getById(decoded?.id)
     if(!user) return next(new AppError('unauthenticated', 400))
 
     // @ts-ignore
