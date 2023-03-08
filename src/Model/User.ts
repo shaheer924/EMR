@@ -28,12 +28,10 @@ const UserModel = new mongoose.Schema<IUser>({
     parental_cnic: {
         type: String,
         required: true,
-        unique: true
     },
     maternal_cnic: {
         type: String,
         required: true,
-        unique: true
     },
     city_id: {
         type: mongoose.Types.ObjectId,

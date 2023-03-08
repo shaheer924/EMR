@@ -30,7 +30,7 @@ router.post('/user-patient', UserController.createPatientUser)
 router.post('/user-admin', UserController.createAdminUser)
 router.get('/user', UserController.getAll)
 router.get('/user/:id', catchAsync(UserController.getById))
-router.get('/user/:cnic/get-family', catchAsync(UserController.getFamily))
+router.get('/user/:cnic/get-family', UserController.getFamily)
 
 //roles
 router.get('/role', UserRoleController.getAll)
@@ -54,18 +54,18 @@ router.put('/faq/:id',FaqController.update)
 router.delete('/faq/:id',FaqController.delete)
 
 //Health Care Places
-router.get('/health-care-place', HealthCarePlaceController.getAll)
-router.get('/health-care-place/:id', HealthCarePlaceController.getById)
-router.post('/health-care-place',HealthCarePlaceController.create)
-router.put('/health-care-place/:id',HealthCarePlaceController.update)
-router.delete('/health-care-place/:id',HealthCarePlaceController.delete)
+router.get('/business', HealthCarePlaceController.getAll)
+router.get('/business/:id', HealthCarePlaceController.getById)
+router.post('/business',HealthCarePlaceController.create)
+router.put('/business/:id',HealthCarePlaceController.update)
+router.delete('/business/:id',HealthCarePlaceController.delete)
 
 //Health Care Places
-router.get('/health-care-place-type', HealthCarePlaceTypeController.getAll)
-router.get('/health-care-place-type/:id', HealthCarePlaceTypeController.getById)
-router.post('/health-care-place-type',HealthCarePlaceTypeController.create)
-router.put('/health-care-place-type/:id',HealthCarePlaceTypeController.update)
-router.delete('/health-care-place-type/:id',HealthCarePlaceTypeController.delete)
+router.get('/business-type', HealthCarePlaceTypeController.getAll)
+router.get('/business-type/:id', HealthCarePlaceTypeController.getById)
+router.post('/business-type',HealthCarePlaceTypeController.create)
+router.put('/business-type/:id',HealthCarePlaceTypeController.update)
+router.delete('/business-type/:id',HealthCarePlaceTypeController.delete)
 
 //Health Care Places
 router.get('/page', PageController.getAll)
@@ -82,17 +82,17 @@ router.put('/push-notification/:id',PushNotificationController.update)
 router.delete('/push-notification/:id',PushNotificationController.delete)
 
 //user report
-router.get('/user/report', UserReportController.getAll)
-router.get('/user/report/:id', UserReportController.getById)
-router.post('/user/report',UserReportController.create)
-router.put('/user/report/:id',UserReportController.update)
-router.delete('/user/report/:id',UserReportController.delete)
+router.get('/user/reports', UserReportController.getAll)
+router.get('/user/reports/:id', UserReportController.getById)
+router.post('/user/reports',UserReportController.create)
+router.put('/user/reports/:id',UserReportController.update)
+router.delete('/user/reports/:id',UserReportController.delete)
 
 //user report
-router.get('/user/report-type', UserReportTypeController.getAll)
-router.get('/user/report-type/:id', UserReportTypeController.getById)
-router.post('/user/report-type',UserReportTypeController.create)
-router.put('/user/report-type/:id',UserReportTypeController.update)
-router.delete('/user/report-type/:id',UserReportTypeController.delete)
+router.get('/user/report-types', UserReportTypeController.getAll)
+router.get('/user/report-types/:id', UserReportTypeController.getById)
+router.post('/user/report-types',UserReportTypeController.create)
+router.put('/user/report-types/:id',UserReportTypeController.update)
+router.delete('/user/report-types/:id',UserReportTypeController.delete)
 
 export default router

@@ -91,13 +91,13 @@ class UserController extends BaseController{
     }
 
 
-    getFamily = async (req: Request, res: Response) => {
+    getFamily = async (req: Request, res: Response, next: NextFunction) => {
         try {
             // @ts-ignore
             const {cnic} = req.params
 
             const user = await UserRepos.model.findOne({ cnic: cnic })
-            if(!user) throw new Error('please provide valid cnic')
+            if(!user) return next(new AppError('please provide valid cnic',400))
 
             // @ts-ignore
             let data = await UserRepos.model.aggregate([

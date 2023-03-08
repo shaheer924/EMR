@@ -1,4 +1,4 @@
-import express from 'express'
+import express, {NextFunction, Request, Response} from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import * as mongoose from "mongoose";
@@ -6,6 +6,7 @@ import Router from "./Router/v1/router";
 import {ErrorController} from "./Middleware/ErrorController";
 import {PublicRouteHandle} from "./Middleware/PublicRouteHandle";
 import {RunFactory} from "./Utils/Factory/FactoryInsert";
+import AppError from "./Utils/AppError";
 
 class App {
     public port: any;
@@ -50,7 +51,9 @@ class App {
 
     private initializeRouter() {
         this.app.use('/api/v1/', Router)
-        this.app.use('*', PublicRouteHandle)
+        this.app.use('*', (req: Request, res: Response, next: NextFunction)=>{
+            return next(new AppError('No route found', 404))
+        })
     }
 
     private initializeErrorHandler(){

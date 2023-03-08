@@ -31,8 +31,8 @@ class UserRepos extends BaseRepos{
             "telephone_no": telephone_no,
             "phone_no": phone_no,
             "password": "12345678",
-            "parental_cnic": "0000000000000",
-            "maternal_cnic": "0000000000000",
+            "parental_cnic": "2342343424333",
+            "maternal_cnic": "5446456546564",
             "confirm_password":"12345678",
             "email": "dummy@yopmail.com",
             "name": "dummy"

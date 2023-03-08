@@ -10,11 +10,11 @@ const UserReportSchema = new mongoose.Schema<IUserReports>({
         type: mongoose.Types.ObjectId,
         ref: 'user_reports'
     },
-    pdf_file:{
-        file: { type: Buffer, required: true },
-        filename: { type: String, required: true },
-        mimetype: { type: String, required: true }
-    },
+    // pdf_file:{
+    //     file: { type: Buffer, required: true },
+    //     filename: { type: String, required: true },
+    //     mimetype: { type: String, required: true }
+    // },
     description: {
         type: String,
         required: true
