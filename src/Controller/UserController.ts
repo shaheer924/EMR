@@ -45,7 +45,7 @@ class UserController extends BaseController{
             if(!condition) return next(new AppError('Incorrect password', 404))
             let data
             if(cnic) data = await UserRepos.updateById(user._id, {is_last_login: new Date()})
-            else data = await AdminUserRepos.model.findOne({_id: user._id})
+            else data = await AdminUserRepos.model.findOne({_id: user._id}).populate('role_id')
             let token = UserRepos.signToken(user._id)
             this.apiResponse('User sign in successful',data,200, res, token)
 
